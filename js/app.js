@@ -56,3 +56,16 @@ const oReqFilms = new XMLHttpRequest();
 oReqFilms.addEventListener("load", reqListenerFilms);
 oReqFilms.open("GET", "https://swapi.co/api/films/");
 oReqFilms.send();
+
+function reqListenerFilms() {
+  const data = JSON.parse(this.responseText);
+  console.log(data);
+  console.log(data.results);
+
+  const filmList = document.getElementById("filmList");
+  data.results.map(arr => {
+    const newFilm = document.createElement("li");
+    newFilm.innerHTML = arr.title;
+    filmList.appendChild(newFilm);
+  });
+}
