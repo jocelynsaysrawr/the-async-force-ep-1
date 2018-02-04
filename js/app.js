@@ -51,3 +51,8 @@ function reqListenerPerson14() {
     person14Species.innerHTML = "Species: " + data2.name;
   }
 }
+
+const oReqFilms = new XMLHttpRequest();
+oReqFilms.addEventListener("load", reqListenerFilms);
+oReqFilms.open("GET", "https://swapi.co/api/films/");
+oReqFilms.send();
