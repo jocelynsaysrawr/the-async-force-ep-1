@@ -63,9 +63,18 @@ function reqListenerFilms() {
   console.log(data.results);
 
   const createfilmList = document.getElementById("filmList");
-  data.results.map(arr => {
+  data.results.map((arr, i) => {
     const newFilm = document.createElement("li");
     newFilm.className = "film";
     createfilmList.appendChild(newFilm);
+  });
+
+  const getFilmList = document.getElementsByClassName("film");
+  console.log(getFilmList);
+  Array.prototype.forEach.call(getFilmList, (arr, i) => {
+    const filmTitle = document.createElement("h2");
+    filmTitle.innerHTML = data.results[i].title;
+    console.log(filmTitle.innerHTML);
+    getFilmList[i].appendChild(filmTitle);
   });
 }
