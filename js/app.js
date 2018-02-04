@@ -62,10 +62,10 @@ function reqListenerFilms() {
   console.log(data);
   console.log(data.results);
 
-  const filmList = document.getElementById("filmList");
+  const createfilmList = document.getElementById("filmList");
   data.results.map(arr => {
     const newFilm = document.createElement("li");
-    newFilm.innerHTML = arr.title;
-    filmList.appendChild(newFilm);
+    newFilm.className = "film";
+    createfilmList.appendChild(newFilm);
   });
 }
