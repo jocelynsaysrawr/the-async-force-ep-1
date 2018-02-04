@@ -78,8 +78,17 @@ function reqListenerFilms() {
     console.log(filmTitle.innerHTML);
     getFilmList[i].appendChild(filmTitle);
 
-    const planets = document.createElement("h3");
-    planets.innerHTML = "Planets";
-    getFilmList[i].appendChild(planets);
+    const Planets = document.createElement("h3");
+    Planets.innerHTML = "Planets";
+    getFilmList[i].appendChild(Planets);
+
+    const filmPlanets = document.createElement("ul");
+    filmPlanets.className = "filmPlanets";
+    getFilmList[i].appendChild(filmPlanets);
+
+    const getPlanetList = document.getElementsByClassName("filmPlanets");
+    const planet = document.createElement("li");
+    planet.className = "planet";
+    getPlanetList[i].appendChild(planet);
   });
 }
