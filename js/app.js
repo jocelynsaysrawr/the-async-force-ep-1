@@ -63,32 +63,38 @@ function reqListenerFilms() {
   console.log(data.results);
 
   const createfilmList = document.getElementById("filmList");
-  data.results.map((arr, i) => {
+  data.results.forEach(arr => {
     const newFilm = document.createElement("li");
     newFilm.className = "film";
     createfilmList.appendChild(newFilm);
-  });
 
-  const getFilmList = document.getElementsByClassName("film");
-  console.log(getFilmList);
-  Array.prototype.forEach.call(getFilmList, (arr, i) => {
     const filmTitle = document.createElement("h2");
     filmTitle.className = "filmTitle";
-    filmTitle.innerHTML = data.results[i].title;
-    console.log(filmTitle.innerHTML);
-    getFilmList[i].appendChild(filmTitle);
+    filmTitle.innerHTML = arr.title;
+    newFilm.appendChild(filmTitle);
 
     const Planets = document.createElement("h3");
     Planets.innerHTML = "Planets";
-    getFilmList[i].appendChild(Planets);
+    newFilm.appendChild(Planets);
 
     const filmPlanets = document.createElement("ul");
     filmPlanets.className = "filmPlanets";
-    getFilmList[i].appendChild(filmPlanets);
+    newFilm.appendChild(filmPlanets);
 
-    const getPlanetList = document.getElementsByClassName("filmPlanets");
-    const planet = document.createElement("li");
-    planet.className = "planet";
-    getPlanetList[i].appendChild(planet);
+    arr.planets.forEach(arr => {
+      const planet = document.createElement("li");
+      planet.className = "planet";
+      const oReqPlanet = new XMLHttpRequest();
+      oReqPlanet.addEventListener("load", function(event) {
+        const data = JSON.parse(event.target.responseText);
+        const planetName = document.createElement("h4");
+        planetName.className = "planetName";
+        planetName.innerHTML = data.name;
+        planet.appendChild(planetName);
+        filmPlanets.appendChild(planet);
+      });
+      oReqPlanet.open("GET", arr);
+      oReqPlanet.send();
+    });
   });
 }
