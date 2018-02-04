@@ -73,8 +73,13 @@ function reqListenerFilms() {
   console.log(getFilmList);
   Array.prototype.forEach.call(getFilmList, (arr, i) => {
     const filmTitle = document.createElement("h2");
+    filmTitle.className = "filmTitle";
     filmTitle.innerHTML = data.results[i].title;
     console.log(filmTitle.innerHTML);
     getFilmList[i].appendChild(filmTitle);
+
+    const planets = document.createElement("h3");
+    planets.innerHTML = "Planets";
+    getFilmList[i].appendChild(planets);
   });
 }
