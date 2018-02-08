@@ -23,43 +23,39 @@ const _createElement = function(element, className, innerHTML) {
   return elementType;
 };
 
+const reqListenerPerson4 = data => {
+  console.log(data);
+  document.getElementById("person4Name").innerHTML = "Name: " + data.name;
+
+  const person4Planet = _request(data.homeworld, reqListener2);
+  function reqListener2(data2) {
+    document.getElementById("person4HomeWorld").innerHTML =
+      "Home World: " + data2.name;
+  }
+};
+
 const oReqPerson4 = _request(
   "https://swapi.co/api/people/4/",
   reqListenerPerson4
 );
 
-function reqListenerPerson4(data) {
+const reqListenerPerson14 = data => {
   console.log(data);
-  document.getElementById("person4Name").innerHTML = "Name: " + data.name;
+  document.getElementById("person14Name").innerHTML = "Name: " + data.name;
 
-  const person4Planet = _request(data.homeworld, reqListener2);
-  function reqListener2() {
-    const data2 = JSON.parse(this.responseText);
-    document.getElementById("person4HomeWorld").innerHTML =
-      "Home World: " + data2.name;
-  }
-}
+  const reqListener2 = data2 => {
+    document.getElementById("person14Species").innerHTML =
+      "Species: " + data2.name;
+  };
+  const person14Species = _request(data.species, reqListener2);
+};
 
 const oReqPerson14 = _request(
   "https://swapi.co/api/people/14/",
   reqListenerPerson14
 );
 
-function reqListenerPerson14(data) {
-  console.log(data);
-  document.getElementById("person14Name").innerHTML = "Name: " + data.name;
-
-  const person14Species = _request(data.species, reqListener2);
-  function reqListener2() {
-    const data2 = JSON.parse(this.responseText);
-    document.getElementById("person14Species").innerHTML =
-      "Species: " + data2.name;
-  }
-}
-
-const oReqFilms = _request("https://swapi.co/api/films/", reqListenerFilms);
-
-function reqListenerFilms(data) {
+const reqListenerFilms = data => {
   console.log(data);
   console.log(data.results);
 
@@ -78,13 +74,15 @@ function reqListenerFilms(data) {
 
     arr.planets.forEach(arr => {
       const planet = _createElement("li", "planet");
-      const oReqPlanet = _request(arr, planetNameData);
-      function planetNameData(data) {
+      const planetNameData = data => {
         const planetName = _createElement("h4", "planetName", data.name);
         planet.appendChild(planetName);
         filmPlanets.appendChild(planet);
-      }
+      };
+      const oReqPlanet = _request(arr, planetNameData);
     });
     createFilmList.appendChild(newFilm);
   });
-}
+};
+
+const oReqFilms = _request("https://swapi.co/api/films/", reqListenerFilms);
