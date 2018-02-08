@@ -2,7 +2,10 @@ console.log("sanity check");
 
 const _request = function(url, callback) {
   const oReq = new XMLHttpRequest();
-  oReq.addEventListener("load", callback);
+  oReq.addEventListener("load", function() {
+    const data = JSON.parse(this.responseText);
+    return callback.bind(this)(data);
+  });
   oReq.open("GET", url);
   oReq.send();
   return oReq;
@@ -25,8 +28,7 @@ const oReqPerson4 = _request(
   reqListenerPerson4
 );
 
-function reqListenerPerson4() {
-  const data = JSON.parse(this.responseText);
+function reqListenerPerson4(data) {
   console.log(data);
   document.getElementById("person4Name").innerHTML = "Name: " + data.name;
 
@@ -43,8 +45,7 @@ const oReqPerson14 = _request(
   reqListenerPerson14
 );
 
-function reqListenerPerson14() {
-  const data = JSON.parse(this.responseText);
+function reqListenerPerson14(data) {
   console.log(data);
   document.getElementById("person14Name").innerHTML = "Name: " + data.name;
 
@@ -58,8 +59,7 @@ function reqListenerPerson14() {
 
 const oReqFilms = _request("https://swapi.co/api/films/", reqListenerFilms);
 
-function reqListenerFilms() {
-  const data = JSON.parse(this.responseText);
+function reqListenerFilms(data) {
   console.log(data);
   console.log(data.results);
 
@@ -79,8 +79,7 @@ function reqListenerFilms() {
     arr.planets.forEach(arr => {
       const planet = _createElement("li", "planet");
       const oReqPlanet = _request(arr, planetNameData);
-      function planetNameData() {
-        const data = JSON.parse(this.responseText);
+      function planetNameData(data) {
         const planetName = _createElement("h4", "planetName", data.name);
         planet.appendChild(planetName);
         filmPlanets.appendChild(planet);
